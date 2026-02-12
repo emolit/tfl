@@ -1,0 +1,116 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\begin{document}
+
+\section*{Анализ системы переписывания слов}
+
+Дана SRS:
+\[
+\begin{cases}
+aaa \to aaab,\\
+aabb \to abab,\\
+aa \to aba,\\
+aaab \to ab,\\
+bbb \to baaaa.
+\end{cases}
+\]
+
+\subsection*{Завершимость.}
+Заметим, что первое правило можно бесконечно применять к слову aaa: 
+\[
+aaa \to aaab \to aaabb \to aaabbb \to \ldots
+\]
+Отсюда получаем, что исходная система не является завершимой. Далее переориентируем правила в выбранном фундированном порядке: сначала сравниваем длину, а затем уже лексикографически.
+
+\subsection*{Конфлюэнтность.}
+Рассмотрим перекрытия для \(abab \to aabb,\; ababab\), применив это правило к разным подстрокам слова получаем \((aabbab,\; abaabb)\), нормализовав получаем \((aabbab,\; aaa)\), элементы пары не равны между собой, потому система не локально конфлюэнтна.
+
+\subsection*{Пополняемость.}
+Пополняя при помощи кода, получаем систему:
+\begin{align*}
+& aaab \to aaa, \\
+& abab \to aabb, \\
+& aba \to aa, \\
+& aaab \to ab, \\
+& baaaa \to bbb, \\
+& aaa \to ab, \\
+& bbbaab \to bbbaa, \\
+& bbbab \to bbba, \\
+& bbbb \to bbb, \\
+& aaaaaaa \to aaa, \\
+& aabbab \to aaa, \\
+& aabb \to aab, \\
+& aabba \to aaa, \\
+& aabb \to aaaa, \\
+& bbbbab \to bbba, \\
+& baaa \to abaa, \\
+& abb \to ab, \\
+& aab \to aa, \\
+& abbb \to ab, \\
+& abba \to aa, \\
+& bbbaa \to bbb, \\
+& bbba \to bab, \\
+& baab \to bbb, \\
+& abbbaa \to ab, \\
+& abbba \to aa, \\
+& abbab \to aa, \\
+& bbb \to baa, \\
+& baab \to bbb, \\
+& bbbaa \to bbb, \\
+& bbba \to bab, \\
+& aab \to aa, \\
+& abbb \to ab, \\
+& abbba \to aa, \\
+& aab \to aa, \\
+& abbb \to ab, \\
+& bbbaa \to bbb, \\
+& aab \to aa, \\
+& aab \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& bab \to ab, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& baa \to aa, \\
+& bbaa \to baa, \\
+& bbab \to bab, \\
+& baaa \to abaa.
+\end{align*}
+В ней все критически пары уже будут сводится к одной нормальной форме, потому уже пополненная система конфлюэнтна, а значит исходная пополнима.
+
+\subsection*{Конечность.}
+Получаем следующие нормальные формы: bba, aa, ab, bb, ba, a, b, $\varepsilon$. К остальным словам же будут применимы правила переписывания. Из-за конечного числа нормальных форм система конечна.
+
+\subsection*{Минимальная система.}
+Теперь будем делать левые части системы как можно меньше за счет остальных, пока не остановимся на моменте, когда это уже невозможно будет сделать, получаем:
+\begin{align*}
+& aba \to aa, \\
+& aaa \to ab, \\
+& abb \to ab, \\
+& bbb \to baa, \\
+& aab \to aa, \\
+& bab \to ab, \\
+& baa \to aa, \\
+& baaa \to abaa.
+\end{align*}
+
+\subsection*{Мета-тестирование.}
+Получаем 2 инварианта в 2 системах:
+\begin{enumerate}
+    \item Если в системе была буква a, то она никуда не пропадет,
+    \item Четность числа букв a.
+\end{enumerate}
+
+\end{document}
